@@ -1,7 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { CAMPOS_COMUNS, gerarTexto, getPeticao, type Campo } from "@/data/peticoes";
+import {
+  CAMPOS_COMUNS,
+  gerarTexto,
+  getPeticao,
+  type Campo,
+  type Peticao,
+} from "@/data/peticoes";
 
 export const Route = createFileRoute("/peticao/$id")({
   loader: ({ params }) => {
@@ -65,7 +71,7 @@ function CampoInput({
 }
 
 function Gerador() {
-  const { pet } = Route.useLoaderData();
+  const { pet } = Route.useLoaderData() as { pet: Peticao };
   const [valores, setValores] = useState<Record<string, string>>({});
 
   const campos = useMemo(() => {
