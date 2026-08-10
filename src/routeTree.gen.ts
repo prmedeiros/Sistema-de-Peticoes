@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ModelosRouteImport } from './routes/modelos'
 import { Route as PeticaoIdRouteImport } from './routes/peticao.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelosRoute = ModelosRouteImport.update({
+  id: '/modelos',
+  path: '/modelos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PeticaoIdRoute = PeticaoIdRouteImport.update({
@@ -25,27 +31,31 @@ const PeticaoIdRoute = PeticaoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/modelos': typeof ModelosRoute
   '/peticao/$id': typeof PeticaoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/modelos': typeof ModelosRoute
   '/peticao/$id': typeof PeticaoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/modelos': typeof ModelosRoute
   '/peticao/$id': typeof PeticaoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/peticao/$id'
+  fullPaths: '/' | '/modelos' | '/peticao/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/peticao/$id'
-  id: '__root__' | '/' | '/peticao/$id'
+  to: '/' | '/modelos' | '/peticao/$id'
+  id: '__root__' | '/' | '/modelos' | '/peticao/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ModelosRoute: typeof ModelosRoute
   PeticaoIdRoute: typeof PeticaoIdRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modelos': {
+      id: '/modelos'
+      path: '/modelos'
+      fullPath: '/modelos'
+      preLoaderRoute: typeof ModelosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/peticao/$id': {
@@ -70,18 +87,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ModelosRoute: ModelosRoute,
   PeticaoIdRoute: PeticaoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

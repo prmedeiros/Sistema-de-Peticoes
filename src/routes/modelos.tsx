@@ -87,8 +87,14 @@ function ModelosEscritorio() {
   };
 
   const salvar = () => {
-    if (!nome.trim()) return toast.error("Dê um nome ao modelo.");
-    if (!texto.trim()) return toast.error("Cole o texto da petição modelo.");
+    if (!nome.trim()) {
+      toast.error("Dê um nome ao modelo.");
+      return;
+    }
+    if (!texto.trim()) {
+      toast.error("Cole o texto da petição modelo.");
+      return;
+    }
     const agora = Date.now();
     const id = selecionado ?? novoId();
     const registro: ModeloEscritorio = {
