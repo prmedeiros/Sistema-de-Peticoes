@@ -55,6 +55,12 @@ function Biblioteca() {
             de atuação. Escolha a peça, preencha a qualificação das partes e os fatos, e obtenha o
             texto pronto para revisão e protocolo.
           </p>
+          <Link
+            to="/modelos"
+            className="mt-7 inline-block border border-gold px-4 py-2 font-mono text-[0.7rem] tracking-[0.15em] text-gold uppercase transition-colors hover:bg-gold hover:text-primary"
+          >
+            Usar modelo do escritório →
+          </Link>
         </div>
       </header>
 
