@@ -711,7 +711,7 @@ function dataExtenso(iso?: string) {
 const ROMANOS = ["a)", "b)", "c)", "d)", "e)", "f)", "g)", "h)"];
 
 export function gerarTexto(pet: Peticao, v: Record<string, string>): string {
-  const preencherData = { ...v, data: dataExtenso(v.data) };
+  const preencherData = { ...v, data: dataExtenso(v['data']) };
   const t = (s: string) => preencher(s, preencherData);
 
   const partes: string[] = [];
@@ -748,7 +748,7 @@ export function gerarTexto(pet: Peticao, v: Record<string, string>): string {
   partes.push("");
   partes.push("Nestes termos, pede deferimento.");
   partes.push("");
-  partes.push(`${t("{{cidade}}")}, ${dataExtenso(v.data)}.`);
+  partes.push(`${t("{{cidade}}")}, ${dataExtenso(v['data'])}.`);
   partes.push("");
   partes.push("");
   partes.push(t("{{advogado}}"));
